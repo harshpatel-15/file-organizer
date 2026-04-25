@@ -1,98 +1,70 @@
-# file-organizer
-import os
-import shutil
+# 🗂️ File Organizer
 
-# ─────────────────────────────────────
-# STEP 1: Set the folder you want to clean
-# Change this path to your folder
+A Python automation script that automatically organizes messy files into categorized folders.
 
+---
 
-# ───────────────────────────────────── 
-my_folder = r"C:\Users\Harsh\Downloads"
+## 📌 About This Project
 
+This project was built to solve a common problem — messy Downloads folders!
+The script scans a folder and automatically sorts every file into the correct category folder based on its file type.
 
-# ─────────────────────────────────────
-# STEP 2: Define file types and folder names
-# Key   = folder name that will be created
-# Value = list of file extensions   
-# ─────────────────────────────────────
-file_types = {
-    "Images"    : [".jpg", ".jpeg", ".png", ".gif", ".bmp"],
-    "Videos"    : [".mp4", ".mkv", ".avi", ".mov"],
-    "Music"     : [".mp3", ".wav", ".aac", ".flac"],
-    "Documents" : [".pdf", ".doc", ".docx", ".txt"],
-    "Excel"     : [".xls", ".xlsx", ".csv"],
-    "Archives"  : [".zip", ".rar", ".tar", ".gz"],
-    "Code"      : [".py", ".js", ".html", ".css", ".java"],
-    "Others"    : []   # All unknown files go here
-}
+---
 
+## ⚙️ How It Works
 
-# ─────────────────────────────────────
-# STEP 3: Function to find folder name
-# Give it a file like "photo.jpg"
-# It returns "Images"
-# ─────────────────────────────────────
-def get_folder_name(filename):
+| File Type | Goes Into Folder |
+|---|---|
+| .jpg, .png, .gif | 📸 Images |
+| .mp4, .mkv, .avi | 🎬 Videos |
+| .mp3, .wav, .aac | 🎵 Music |
+| .pdf, .docx, .txt | 📄 Documents |
+| .xlsx, .csv | 📊 Excel |
+| .zip, .rar | 🗜️ Archives |
+| .py, .js, .html | 💻 Code |
+| Everything else | 📦 Others |
 
-    # Get the extension  e.g.  "photo.jpg"  -->  ".jpg"
-    extension = os.path.splitext(filename)[1].lower()
+---
 
-    # Check which category it belongs to
-    for folder_name, extensions in file_types.items():
-        if extension in extensions:
-            return folder_name
+## 🛠️ Technologies Used
 
-    # If no match found, return Others
-    return "Others"
+- **Language:** Python 3
+- **Libraries:** os, shutil, pathlib (all built-in — no installation needed!)
 
+---
 
-# ─────────────────────────────────────
-# STEP 4: Main function - organize files
-# ─────────────────────────────────────
-def organize():
-    print("Starting file organizer...")
-    print(f"Folder: {my_folder}")
-    print("-" * 40)
+## ▶️ How to Run
 
-    # Count how many files we move
-    count = 0
+1. Make sure Python is installed on your PC
+2. Open the file `file_organizer.py`
+3. Change line 7 to your folder path:
+```python
+my_folder = r"C:\Users\YourName\Downloads"
+```
+4. Run the script:
+```bash
+python file_organizer.py
+```
 
-    # Loop through every item in the folder
-    for filename in os.listdir(my_folder):
+---
 
-        # Full path of the file
-        # e.g.  C:\Users\YourName\Downloads\photo.jpg
-        file_path = os.path.join(my_folder, filename)
+## 📸 Output Example
 
-        # Skip if it is a folder (not a file)
-        if os.path.isdir(file_path):
-            continue
+```
+Starting file organizer...
+Folder: C:\Users\harsh\Downloads
+----------------------------------------
+Moved: photo.jpg  -->  Images/
+Moved: resume.pdf  -->  Documents/
+Moved: song.mp3  -->  Music/
+----------------------------------------
+Done! Total files moved: 3
+```
 
-        # Find which folder this file should go into
-        destination_folder = get_folder_name(filename)
+---
 
-        # Full path of the destination folder
-        # e.g.  C:\Users\YourName\Downloads\Images
-        destination_path = os.path.join(my_folder, destination_folder)
+## 👨‍💻 Author
 
-        # Create the folder if it does not exist
-        if not os.path.exists(destination_path):
-            os.makedirs(destination_path)
-
-        # Move the file into the folder
-        shutil.move(file_path, os.path.join(destination_path, filename))
-
-        print(f"Moved: {filename}  -->  {destination_folder}/")
-        count += 1
-
-    # Done!
-    print("-" * 40)
-    print(f"Done! Total files moved: {count}")
-
-
-# ─────────────────────────────────────
-# STEP 5: Run the program
-# ─────────────────────────────────────
-organize()
-Python automation script to organize files by type
+**Harsh Patel**
+BSc IT Student — GLS University, Ahmedabad
+GitHub: github.com/harshpatel-15
